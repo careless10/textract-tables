@@ -12,9 +12,9 @@ function process() {
     const processed = [];
     for (let i = 0; i < list.length; i++) {
       const qualities = {
-        high: filteredBlocks[i * 3]?.Text,
+        high: filteredBlocks[i * 3 + 2]?.Text,
         med: filteredBlocks[i * 3 + 1]?.Text,
-        low: filteredBlocks[i * 3 + 2]?.Text,
+        low: filteredBlocks[i * 3]?.Text,
       };
       processed.push({ name: list[i], qualities });
     }
