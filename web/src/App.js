@@ -6,6 +6,10 @@ import { useState } from "react";
 
 function App() {
   const [prices, setPrices] = useState([]);
+  function extract() {
+    axios.get("http://localhost:3001/api/extract");
+  }
+
   function process() {
     axios.get("http://localhost:3001/api/process");
   }
@@ -18,6 +22,7 @@ function App() {
 
   return (
     <div className="App">
+      <Button onClick={extract}>extract</Button>
       <Button onClick={process}>process</Button>
       <Button onClick={list}>list</Button>
       {prices.map((i) => (

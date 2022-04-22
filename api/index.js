@@ -1,4 +1,5 @@
 import express from "express";
+import extract from "./extract";
 import formattedList from "./formattedList";
 import process from "./process";
 const app = express();
@@ -11,6 +12,11 @@ app.use(function (req, res, next) {
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   next();
+});
+
+app.get("/api/extract", (req, res) => {
+  extract();
+  res.send("Done");
 });
 
 app.get("/api/process", (req, res) => {

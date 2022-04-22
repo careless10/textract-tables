@@ -2,6 +2,7 @@
   "type": "module",
   "dependencies": {
     "@aws-sdk/client-textract": "^3.75.0",
+    "@google-cloud/vision": "^2.4.2",
     "express": "^4.17.3",
     "nodemon": "^2.0.15"
   },
@@ -9,6 +10,10 @@
     "start": "nodemon --experimental-modules --es-module-specifier-resolution=node  index.js"
   },
   "nodemonConfig": {
-    "ignore": ["./processed/*","./extracted/*","./images/*"]
-}
+    "ignore": [
+      "./processed/*",
+      "./extracted/*",
+      "./images/*"
+    ]
+  }
 }
