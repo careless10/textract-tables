@@ -4,15 +4,19 @@ import fs from "fs";
 const formattedList = () => {
   const dir = fs.readdirSync("./processed");
   const formattedList = list.map((i) => ({ name: i, qualities: [] }));
-  for (const file of dir) {
+  let readingFile = 0;
+  for (const file of dir.reverse()) {
     const readFile = fs.readFileSync("./processed/" + file);
     const parsed = JSON.parse(readFile);
     for (let i = 0; i < parsed.length; i++) {
       const element = parsed[i];
-      formattedList[i].qualities.push(element.qualities);
+      formattedList[i].qualities.push({
+        ...element.qualities,
+        order: readingFile,
+      });
     }
+    readingFile++;
   }
-  console.log("done");
   return formattedList;
 };
 

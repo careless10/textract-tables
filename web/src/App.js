@@ -3,6 +3,7 @@ import "./App.css";
 import { Button } from "reactstrap";
 import axios from "axios";
 import { useState } from "react";
+import ChartsList from "./containers/ChartsList";
 
 function App() {
   const [prices, setPrices] = useState([]);
@@ -21,13 +22,11 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="">
       <Button onClick={extract}>extract</Button>
       <Button onClick={process}>process</Button>
       <Button onClick={list}>list</Button>
-      {prices.map((i) => (
-        <p>{i.name}</p>
-      ))}
+      <ChartsList list={prices} />
     </div>
   );
 }
