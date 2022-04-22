@@ -2,8 +2,9 @@
 
 # dependencies
 **/node_modules
-**/processed
-**/extracted
+**/images/*
+**/processed/*
+**/extracted/*
 /.pnp
 .pnp.js
 

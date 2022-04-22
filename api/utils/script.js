@@ -10,7 +10,7 @@ function myFunction() {
   const scrolled = document.documentElement.scrollTop;
   if (scrolled % 1000 < 100) {
     document.querySelectorAll("img").forEach((i) => {
-      const title = i.closest("article")?.querySelector("time").dateTime;
+      const title = i.closest("article")?.querySelector("time")?.dateTime;
       if (title) images.add({ title, link: i.src });
     });
   }
@@ -18,7 +18,8 @@ function myFunction() {
     printed = true;
     clearTimeout(scrolldelay);
     console.log("Copy the following");
-    console.log([...images]);
+    const copyable = [...images].filter((i) => i.link.includes("media"));
+    console.log(copyable);
   }
 }
 
