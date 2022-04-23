@@ -1,7 +1,10 @@
 import express from "express";
+import setup from "./setup";
 import extract from "./extract";
 import formattedList from "./formattedList";
+import needsCorrection from "./needsCorrection";
 import process from "./process";
+import corrector from "./corrector";
 const app = express();
 const port = 3001;
 
@@ -26,6 +29,18 @@ app.get("/api/process", (req, res) => {
 
 app.get("/api/list", (req, res) => {
   res.send(formattedList());
+});
+
+app.get("/api/needs-correction", (req, res) => {
+  res.send(needsCorrection());
+});
+
+app.get("/api/setup", (req, res) => {
+  res.send(setup());
+});
+
+app.get("/api/correction", (req, res) => {
+  res.send(corrector());
 });
 
 app.listen(port, () => {

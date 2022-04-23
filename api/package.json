@@ -5,7 +5,8 @@
     "@google-cloud/vision": "^2.4.2",
     "express": "^4.17.3",
     "nodemon": "^2.0.15",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "sqlite3": "^5.0.5"
   },
   "scripts": {
     "start": "nodemon --experimental-modules --es-module-specifier-resolution=node  index.js"

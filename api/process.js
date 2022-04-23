@@ -43,9 +43,9 @@ function formatBeforePush(arr, block) {
   const { description } = block;
   const arabic = /[\u0600-\u06FF]/;
   var price = /^\d+[,.]+\d{3}/;
-  if (description.includes("شد")) return;
   if (arabic.test(description)) {
-    arr.words += ` ${description}`;
+    if (arr.words.length > 0) arr.words += ` `;
+    arr.words += `${description}`;
   }
   if (price.test(description)) {
     arr.prices.push(description);
