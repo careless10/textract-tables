@@ -1,10 +1,10 @@
 import list from "./list";
 import fs from "fs";
+import path, { basename } from "path";
 
 const formattedList = () => {
   const dir = fs.readdirSync("./processed");
   const formattedList = list.map((i) => ({ name: i, qualities: [] }));
-  let readingFile = 0;
   for (const file of dir.reverse()) {
     const readFile = fs.readFileSync("./processed/" + file);
     const parsed = JSON.parse(readFile);
@@ -12,10 +12,9 @@ const formattedList = () => {
       const element = parsed[i];
       formattedList[i].qualities.push({
         ...element.qualities,
-        order: readingFile,
+        order: path.parse(file).name.slice(4, 8),
       });
     }
-    readingFile++;
   }
   return formattedList;
 };

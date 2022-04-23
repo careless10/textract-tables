@@ -10,15 +10,18 @@ function myFunction() {
   const scrolled = document.documentElement.scrollTop;
   if (scrolled % 1000 < 100) {
     document.querySelectorAll("img").forEach((i) => {
-      const title = i.closest("article")?.querySelector("time")?.dateTime;
-      if (title) images.add({ title, link: i.src });
+      images.add(i);
     });
   }
-  if (scrolled > 50000 && !printed) {
-    printed = true;
+  if (scrolled > 100000) {
+    const res = [];
+    images.forEach((i) => {
+      const title = i.closest("article")?.querySelector("time")?.dateTime;
+      if (title) res.push({ title, link: i.src });
+    });
     clearTimeout(scrolldelay);
     console.log("Copy the following");
-    const copyable = [...images].filter((i) => i.link.includes("media"));
+    const copyable = [...res].filter((i) => i.link.includes("media"));
     console.log(copyable);
   }
 }
