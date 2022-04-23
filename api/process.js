@@ -3,6 +3,7 @@ import list from "./list.js";
 
 function process() {
   const dir = fs.readdirSync("./extracted");
+  const minX = 200;
 
   for (const file of dir) {
     const newFileName = file.replace(/-/g, "").split("T")[0] + ".json";
@@ -11,13 +12,13 @@ function process() {
     const parsedFile = JSON.parse(readFile);
     let lines = [];
     for (const [key, block] of parsedFile.entries()) {
-      if (key == 0) continue;
       const {
         boundingPoly: { vertices },
       } = block;
       const line = vertices[0].y;
+      if (key == 0 || minX >= vertices[1].x) continue;
       let existingLine = lines.find((item) => {
-        return Math.abs(item.line - line) <= 4;
+        return Math.abs(item.line - line) <= 9;
       });
 
       if (!existingLine) {
@@ -25,9 +26,10 @@ function process() {
         existingLine = lines[lines.length - 1];
       }
 
-      formatBeforePush(existingLine, block.description);
+      formatBeforePush(existingLine, block);
     }
-    lines = lines.filter((i) => i.words !== "" || i.prices.length !== 0);
+    lines = lines.filter((i) => i.words !== "" && i.prices.length !== 0);
+
     writeFileSync(
       "./processed/" + newFileName,
       JSON.stringify(lines),
@@ -37,15 +39,16 @@ function process() {
   }
 }
 
-function formatBeforePush(arr, text) {
+function formatBeforePush(arr, block) {
+  const { description } = block;
   const arabic = /[\u0600-\u06FF]/;
   var price = /^\d+[,.]+\d{3}/;
-  if (text.includes("شد")) return;
-  if (arabic.test(text)) {
-    arr.words += ` ${text}`;
+  if (description.includes("شد")) return;
+  if (arabic.test(description)) {
+    arr.words += ` ${description}`;
   }
-  if (price.test(text)) {
-    arr.prices.push(text);
+  if (price.test(description)) {
+    arr.prices.push(description);
   }
 }
 
