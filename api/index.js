@@ -1,4 +1,5 @@
 import express from "express";
+import bodyParser from "body-parser";
 import setup from "./setup";
 import extract from "./extract";
 import formattedList from "./formattedList";
@@ -7,6 +8,11 @@ import process from "./process";
 import corrector from "./corrector";
 const app = express();
 const port = 3001;
+
+var jsonParser = bodyParser.json();
+
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
@@ -32,15 +38,15 @@ app.get("/api/list", (req, res) => {
 });
 
 app.get("/api/needs-correction", (req, res) => {
-  res.send(needsCorrection());
+  needsCorrection(res);
 });
 
 app.get("/api/setup", (req, res) => {
   res.send(setup());
 });
 
-app.get("/api/correction", (req, res) => {
-  res.send(corrector());
+app.post("/api/correction", jsonParser, (req, res) => {
+  corrector(req.body.incorrect, req.body.correct, res);
 });
 
 app.listen(port, () => {

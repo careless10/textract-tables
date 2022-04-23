@@ -12,7 +12,12 @@ const setup = () => {
     }
   );
 
-  // db.run("CREATE TABLE corrections(incorrect,correct)");
+  // db.run(s"DROP TABLE corrections");
+  // db.run(
+  //   "CREATE TABLE corrections(incorrect,correct,unique (incorrect, correct))"
+  // );
+  // db.close();
+  // return;
   const sql = `INSERT INTO corrections (incorrect,correct) VALUES(?,?)`;
   // db.run(`DELETE FROM corrections`);
 

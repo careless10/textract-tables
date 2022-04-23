@@ -1,8 +1,8 @@
 import sqlite3 from "sqlite3";
 import list from "./list";
-import { allLabels } from "./needsCorrection";
+import needsCorrection, { allLabels } from "./needsCorrection";
 
-const corrector = () => {
+const corrector = (incorrect, correct, res) => {
   const db = new sqlite3.Database(
     "./corrections.db",
     sqlite3.OPEN_READWRITE,
@@ -12,13 +12,27 @@ const corrector = () => {
     }
   );
 
-  // db.run("CREATE TABLE corrections(incorrect,correct)");
-  const sql = `INSERT INTO corrections (incorrect,correct) VALUES(?,?)`;
-  //   db.run(`DELETE FROM corrections`);
+  if (correct === undefined) {
+  } else {
+    const sql = `UPDATE corrections SET correct=? WHERE incorrect=?`;
 
-  db.all(`SELECT * FROM corrections`, (err, rows) => {});
+    db.run(sql, [correct, incorrect], (err, res) => {});
+  }
+
+  // db.all(
+  //   `SELECT * FROM corrections WHERE incorrect='${incorrect}'`,
+  //   (err, res) => {
+  //     console.log(err);
+  //     console.log(res);
+  //   }
+  // );
+
+  // db.all(`SELECT * FROM corrections `, (err, rows) => {
+  //   console.log(rows);
+  // });
 
   db.close();
+  res.send("Thanks");
 };
 
 export default corrector;

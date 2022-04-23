@@ -1,0 +1,12 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:textract-tables}/api/corrections.db",
+            "name": "sample",
+            "group": "data"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

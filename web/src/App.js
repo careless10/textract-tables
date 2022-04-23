@@ -8,7 +8,7 @@ import Corrector from "./containers/Corrector";
 
 function App() {
   const [prices, setPrices] = useState([]);
-  const [corrections, setCorrections] = useState([]);
+  const [correction, setCorrection] = useState();
   const [correctList, setCorrectList] = useState([]);
   function extract() {
     axios.get("http://localhost:3001/api/extract");
@@ -28,21 +28,13 @@ function App() {
     axios.get("http://localhost:3001/api/setup").then((res) => {});
   }
 
-  function needsCorrection() {
-    axios.get("http://localhost:3001/api/needs-correction").then((res) => {
-      setCorrectList(res.data[0]);
-      setCorrections(res.data[1]);
-    });
-  }
-
   return (
     <div className="">
       <Button onClick={setup}>setup</Button>
       <Button onClick={extract}>extract</Button>
       <Button onClick={process}>process</Button>
       <Button onClick={list}>list</Button>
-      <Button onClick={needsCorrection}>Correction</Button>
-      <Corrector correctList={correctList} corrections={corrections} />
+      <Corrector />
       {prices.length > 0 && <ChartsList list={prices} />}
     </div>
   );
