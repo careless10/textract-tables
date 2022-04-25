@@ -28,10 +28,9 @@ export function allLabels() {
   for (const file of dir) {
     const readFile = fs.readFileSync("./processed/" + file);
     const parsed = JSON.parse(readFile);
-    all = [...all, ...parsed.map((i) => i.words)];
+    all = [...all, ...parsed.map((i) => ({ ...i, file }))];
   }
-  const filtered = all.filter((i) => !list.find((j) => i === j));
-
+  const filtered = all.filter((i) => !list.find((j) => i.words === j.words));
   return filtered;
 }
 

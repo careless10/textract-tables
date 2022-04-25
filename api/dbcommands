@@ -1,0 +1,2 @@
+-- DROP TABLE corrections
+-- CREATE TABLE corrections(incorrect,correct,line,file,prices,unique (incorrect))

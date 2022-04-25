@@ -3,10 +3,10 @@ import list from "./list.js";
 
 function process() {
   const dir = fs.readdirSync("./extracted");
-  const minX = 200;
+  const minX = 150;
 
   for (const file of dir) {
-    const newFileName = file.replace(/-/g, "").split("T")[0] + ".json";
+    const newFileName = file;
     if (existsSync(`./processed/${newFileName}`)) continue;
     const readFile = readFileSync("./extracted/" + file);
     const parsedFile = JSON.parse(readFile);

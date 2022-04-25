@@ -1,13 +1,17 @@
-import express from "express";
 import bodyParser from "body-parser";
-import setup from "./setup";
+import express from "express";
+import path from "path";
+import corrector from "./corrector";
 import extract from "./extract";
 import formattedList from "./formattedList";
 import needsCorrection from "./needsCorrection";
 import process from "./process";
-import corrector from "./corrector";
+import setup from "./setup";
+
 const app = express();
 const port = 3001;
+
+app.use(express.static("images"));
 
 var jsonParser = bodyParser.json();
 
@@ -43,6 +47,11 @@ app.get("/api/needs-correction", (req, res) => {
 
 app.get("/api/setup", (req, res) => {
   res.send(setup());
+});
+
+app.get("/api/image/:id", (req, res) => {
+  console.log(req.query);
+  res.send("got you");
 });
 
 app.post("/api/correction", jsonParser, (req, res) => {

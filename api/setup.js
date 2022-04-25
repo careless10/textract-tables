@@ -12,23 +12,23 @@ const setup = () => {
     }
   );
 
-  // db.run(s"DROP TABLE corrections");
-  // db.run(
-  //   "CREATE TABLE corrections(incorrect,correct,unique (incorrect, correct))"
-  // );
+  // db.run("DROP TABLE corrections");
+  // db.run("CREATE TABLE corrections(incorrect,correct,line,unique (incorrect))");
   // db.close();
   // return;
-  const sql = `INSERT INTO corrections (incorrect,correct) VALUES(?,?)`;
+  const sql = `INSERT OR IGNORE INTO corrections (incorrect,correct,prices,line,file) VALUES(?,?,?,?,?)`;
   // db.run(`DELETE FROM corrections`);
+  db.on("error", function (error) {
+    console.log("Getting an error : ", error);
+  });
 
   db.all(`SELECT * FROM corrections`, (err, rows) => {
-    console.log(rows);
     if (rows.length === 0) {
       list.forEach((i) => {
-        db.run(sql, [i, i]);
+        db.run(sql, [i, i, null, null]);
       });
       allLabels().forEach((i) => {
-        db.run(sql, [i, null]);
+        db.run(sql, [i.words, null, JSON.stringify(i.prices), i.line, i.file]);
       });
     }
   });

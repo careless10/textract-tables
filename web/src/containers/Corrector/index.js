@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "reactstrap";
+import { Button, Col, Row } from "reactstrap";
 import axios from "axios";
+import ReactCrop from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
 
 const Corrector = (props) => {
   const [pending, setPending] = useState();
@@ -29,30 +31,53 @@ const Corrector = (props) => {
   }
 
   return (
-    <div>
-      <h2>{pending?.incorrect}</h2>
-      <div className="d-flex flex-wrap p-4">
-        {correctList.map((i) => (
+    <Row>
+      <Col lg="6">
+        <h2 className="text-center">{pending?.incorrect}</h2>
+        <h4 className="text-center">{pending?.prices}</h4>
+        <div className="d-flex flex-wrap p-4">
+          {correctList.map((i) => (
+            <Button
+              key={i}
+              onClick={() => {
+                correctIt(i);
+              }}
+              className="m-2"
+            >
+              {i}
+            </Button>
+          ))}
           <Button
-            key={i}
             onClick={() => {
-              correctIt(i);
+              correctIt(undefined);
             }}
             className="m-2"
           >
-            {i}
+            dunno
           </Button>
-        ))}
-        <Button
-          onClick={() => {
-            correctIt(undefined);
-          }}
-          className="m-2"
-        >
-          dunno
-        </Button>
-      </div>
-    </div>
+        </div>
+      </Col>
+      <Col lg="6">
+        {pending?.file && (
+          <ReactCrop
+            crop={{
+              unit: "px",
+              x: 0,
+              y: pending.line,
+              width: 1000,
+              height: 20,
+            }}
+          >
+            <img
+              src={`http://localhost:3001/${pending.file.replace(
+                "json",
+                "jpg"
+              )}`}
+            />
+          </ReactCrop>
+        )}
+      </Col>
+    </Row>
   );
 };
 
